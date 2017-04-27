@@ -1,0 +1,1666 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="X1CqvrVbud3VpYImf8ssXGByw2c4Ox_R05fXCorkciE" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="CentOS,Perl,Python," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="梦欣笔记" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="这篇博文记录了我用 CentOS 7 搭建 数据科学生产环境 的过程，供我个人在未来重装系统时参考。对于其他同学，也许有借鉴意义。 阅读须知：  不推荐刚接触 Linux 的人使用 CentOS 发行版； 本文尽量写的浅显易懂，但要求读者掌握 Linux 基础知识； 本文所有操作均在 CentOS 7 下完成，其他发行版或多或少与 CentOS 7 不同，因而仅供参考； 本文所安装的软件纯粹出于个">
+<meta name="keywords" content="CentOS,Perl,Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用 CentOS 7 打造合适的科研环境">
+<meta property="og:url" content="http://www.imzmx.win/2017/04/15/centos-s/index.html">
+<meta property="og:site_name" content="梦欣笔记">
+<meta property="og:description" content="这篇博文记录了我用 CentOS 7 搭建 数据科学生产环境 的过程，供我个人在未来重装系统时参考。对于其他同学，也许有借鉴意义。 阅读须知：  不推荐刚接触 Linux 的人使用 CentOS 发行版； 本文尽量写的浅显易懂，但要求读者掌握 Linux 基础知识； 本文所有操作均在 CentOS 7 下完成，其他发行版或多或少与 CentOS 7 不同，因而仅供参考； 本文所安装的软件纯粹出于个">
+<meta property="og:updated_time" content="2017-04-18T16:00:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用 CentOS 7 打造合适的科研环境">
+<meta name="twitter:description" content="这篇博文记录了我用 CentOS 7 搭建 数据科学生产环境 的过程，供我个人在未来重装系统时参考。对于其他同学，也许有借鉴意义。 阅读须知：  不推荐刚接触 Linux 的人使用 CentOS 发行版； 本文尽量写的浅显易懂，但要求读者掌握 Linux 基础知识； 本文所有操作均在 CentOS 7 下完成，其他发行版或多或少与 CentOS 7 不同，因而仅供参考； 本文所安装的软件纯粹出于个">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.imzmx.win/2017/04/15/centos-s/"/>
+
+
+
+
+
+  <title>用 CentOS 7 打造合适的科研环境 | 梦欣笔记</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', '98206095-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1261819063&web_id=1261819063" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">梦欣笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">就是我的学习笔记(^-^)</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-donations">
+          <a href="/donations" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-rmb"></i> <br />
+            
+            捐赠
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.imzmx.win/2017/04/15/centos-s/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Messiah">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="梦欣笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                用 CentOS 7 打造合适的科研环境
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-15T00:00:00+08:00">
+                2017-04-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"> 本文总阅读量 </i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这篇博文记录了我用 CentOS 7 搭建 <strong>数据科学生产环境</strong> 的过程，供我个人在未来重装系统时参考。对于其他同学，也许有借鉴意义。</p>
+<p>阅读须知：</p>
+<ol>
+<li><strong>不推荐刚接触 Linux 的人使用 CentOS 发行版</strong>；</li>
+<li>本文尽量写的浅显易懂，但要求读者掌握 Linux 基础知识；</li>
+<li>本文所有操作均在 CentOS 7 下完成，其他发行版或多或少与 CentOS 7 不同，因而仅供参考；</li>
+<li>本文所安装的软件纯粹出于个人习惯及喜好，读者应自己判断，按需安装；</li>
+</ol>
+<a id="more"></a>
+<h2 id="安装-CentOS"><a href="#安装-CentOS" class="headerlink" title="安装 CentOS"></a>安装 CentOS</h2><p>CentOS 7 的安装与其他 Linux 发行版的安装差不多，个别地方稍有不同。</p>
+<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><ol>
+<li><p>准备材料</p>
+<ul>
+<li>U 盘：容量 2GB 以上，用于制作 U 盘启动盘，因为在制作启动盘时会格式化 U 盘，所以 U 盘内不要包含重要资料</li>
+<li><a href="http://mirrors.ustc.edu.cn/centos/7/isos/x86_64/CentOS-7-x86_64-LiveGNOME-1511.iso" target="_blank" rel="external">CentOS 7.2 LiveCD ISO 镜像文件</a></li>
+<li><a href="http://www.pendrivelinux.com/universal-usb-installer-easy-as-1-2-3/" target="_blank" rel="external">Universal USB installer</a>：Windows 下的 U 盘启动盘制作工具</li>
+<li>一个已安装 Windows 的电脑：用于制作 U 盘启动盘</li>
+</ul>
+</li>
+<li><p>运行 Universal USB installer 并制作 U 盘启动盘</p>
+</li>
+<li>将 U 盘插入计算机，重启，进入 BIOS 选择从 U 盘启动，即可进入 CentOS 的 LiveCD</li>
+<li>进入 LiveCD 后，点击桌面的 “Install to Hard Drive” 即可安装</li>
+</ol>
+<p>注：Linux 下可以通过 <code>dd</code> 命令制作启动盘，但由于对原理不够了解，偶尔会导致制作失败，<br>或制作成功后 U 盘容量有问题，还是用 Windows 下的 Universal USB installer 比较靠谱。</p>
+<h3 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h3><ol>
+<li><p>选择安装过程中使用的语言，这里应 <strong>使用英语，不要使用汉语</strong>。若安装界面使用汉语，最终安装的系统中会出现两个比较麻烦的问题：</p>
+<ol>
+<li>家目录下的系统文件夹如 Downloads、Desktop 等会以中文表示，这使得在命令行 <code>cd</code> 变得很麻烦；</li>
+<li>终端中某些字符用英文字体，某些字符用中文字体，效果非常差，需要自己修改终端字体方可；</li>
+</ol>
+</li>
+<li><p>选择区域和城市：Asia 和 Shanghai</p>
+</li>
+<li>键盘使用 English(US) 而不是 English(UK)</li>
+<li>Hostname 可以改也可以不改，我用 <code>saturn.geolab</code></li>
+<li>安装的目的地，选择要使用的硬盘，在 “Other Storage Options” 处选择“I will configure partioning”，即手动分区</li>
+</ol>
+<h3 id="分区"><a href="#分区" class="headerlink" title="分区"></a>分区</h3><p>CentOS7 的分区似乎比较特别，自认为经验很丰富的我在第一次安装 CentOS7 时还是在分区上耽误了很多时间。后来找到比较合适的分区方法，如下：</p>
+<ul>
+<li>点击 “Click here to create them automatically”，即让安装程序帮忙分区</li>
+<li>默认的分区方案是使用 LVM，其好处在于 “当机器有多块硬盘时，在使用的时候看上去只有一块”</li>
+<li>默认的文件系统为 XFS 而不是以前常用的 EXT4；</li>
+<li>自动分区完成后，再根据自己的需求，手动修改分区细节<ul>
+<li><code>/boot</code> ：CentOS 自动分配，一定不要乱改；</li>
+<li><code>/</code> ：根目录，合理使用并及时清理的话 15G 就够了，不过建议 30G 以上；</li>
+<li><code>swap</code> ：与物理内存大小一致即可</li>
+<li><code>/opt</code> ：个人习惯是将第三方软件都安装在 <code>/opt</code> 下，所以分了 70G</li>
+<li><code>/home</code> ：余下的全部空间</li>
+</ul>
+</li>
+<li>点击 “Begin to Install” 开始安装</li>
+</ul>
+<h3 id="真正的安装"><a href="#真正的安装" class="headerlink" title="真正的安装"></a>真正的安装</h3><ol>
+<li>设置 root 密码</li>
+<li>创建一般用户</li>
+<li>等待安装完成</li>
+<li>安装完成，重启</li>
+<li>重启后，同意 License 即可</li>
+</ol>
+<h2 id="对系统的若干修改"><a href="#对系统的若干修改" class="headerlink" title="对系统的若干修改"></a>对系统的若干修改</h2><h3 id="若干原则"><a href="#若干原则" class="headerlink" title="若干原则"></a>若干原则</h3><p>为了搭建一个稳定的系统，尽量避免因为各种瞎折腾而导致的系统问题，特订立了一些软件安装的原则。<br>具体参见《<a href="/how-to-install-softwares-under-centos-7.html">CentOS7 下的软件安装方法与策略</a>》。</p>
+<h3 id="给一般账号-root-权限"><a href="#给一般账号-root-权限" class="headerlink" title="给一般账号 root 权限"></a>给一般账号 root 权限</h3><p>默认情况下，一般账号是没有 root 权限的。为什么不直接用 root 账号，而是要给一般账号 root 权限呢？</p>
+<ul>
+<li><strong>日常工作中使用 root 账号，是非常糟糕且危险的习惯！无论是服务器还是个人电脑都是如此。</strong></li>
+<li>安装软件时需要 root 权限，只能 <code>su</code> 切换到 root 账户再安装。对于习惯使用 <code>sudo</code> 的人来说，还是有些麻烦。</li>
+</ul>
+<p>假设账户名为 seisman，要授予他 root 权限，则要修改配置文件 <code>/etc/sudoers</code> :</p>
+<pre><code>$ su
+# echo &apos;seisman ALL=(ALL) ALL&apos;&gt;&gt; /etc/sudoers # 向配置文件中加入语句
+# tail -1 /etc/sudoers  # 检查一下是否正确
+seisman ALL=(ALL) ALL
+</code></pre><p>其中 seisman 为当前用户名。</p>
+<h3 id="添加第三方源"><a href="#添加第三方源" class="headerlink" title="添加第三方源"></a>添加第三方源</h3><p>CentOS 由于很追求稳定性，所以官方源中自带的软件不多，因而需要一些第三方源，比如<br>EPEL、ATrpms、ELRepo、Nux Dextop、RepoForge 等。根据上面提到的软件安装原则，为了尽<br>可能保证系统的稳定性，此处大型第三方源只添加 EPEL 源、Nux Dextop 和 ELRepo 源。</p>
+<h4 id="EPEL"><a href="#EPEL" class="headerlink" title="EPEL"></a>EPEL</h4><p><a href="https://fedoraproject.org/wiki/EPEL" target="_blank" rel="external">EPEL</a> 即 Extra Packages for Enterprise Linux，<br>为 CentOS 提供了额外的 10000 多个软件包，而且在不替换系统组件方面下了很多功夫，因而可以放心使用。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo yum install epel-release</div></pre></td></tr></table></figure>
+<p>执行完该命令后，在 <code>/etc/yum.repos.d</code> 目录下会多一个 <code>epel.repo</code> 文件。</p>
+<!-- #### Nux Dextop
+
+[Nux Dextop](http://li.nux.ro/repos.html) 中包含了一些与多媒体相关的软件包，作者尽量
+保证不覆盖 base 源。官方说明中说该源与 EPEL 兼容，实际上个别软件包存在冲突，但基本不会造成影响:
+
+    sudo rpm -Uvh http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-5.el7.nux.noarch.rpm
+
+完成该命令后，在 `/etc/yum.repos.d` 目录下会多一个 `nux-dextop.repo` 文件。-->
+<h4 id="ELRepo"><a href="#ELRepo" class="headerlink" title="ELRepo"></a>ELRepo</h4><p>ELRepo 包含了一些硬件相关的驱动程序，比如显卡、声卡驱动:</p>
+<pre><code>sudo rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+sudo rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm
+</code></pre><p>完成该命令后，在 <code>/etc/yum.repos.d</code> 目录下会多一个 <code>elrepo.repo</code> 文件。</p>
+<h3 id="安装-yum-axelget"><a href="#安装-yum-axelget" class="headerlink" title="安装 yum-axelget"></a>安装 yum-axelget</h3><p><a href="https://dl.fedoraproject.org/pub/epel/7/x86_64/repoview/yum-axelget.html" target="_blank" rel="external">yum-axelget</a> 是 EPEL<br>提供的一个 yum 插件。使用该插件后用 yum 安装软件时可以并行下载，大大提高了软件的下载速度，减少了下载的等待时间:</p>
+<pre><code>sudo yum install yum-axelget
+</code></pre><p>安装该插件的同时会安装另一个软件 axel。axel 是一个并行下载工具，在下载 http、ftp 等简单协议的文件时非常好用。</p>
+<h3 id="第一次全面更新"><a href="#第一次全面更新" class="headerlink" title="第一次全面更新"></a>第一次全面更新</h3><p>在进一步操作之前，先把已经安装的软件包都升级到最新版:</p>
+<pre><code>sudo yum update
+</code></pre><p>要更新的软件包有些多，可能需要一段时间。不过有了 yum-axelget 插件，速度已经快了很多啦。</p>
+<h3 id="重启"><a href="#重启" class="headerlink" title="重启"></a>重启</h3><p>第一次全面更新完之后建议重启。</p>
+<h3 id="删除多余的-kernel"><a href="#删除多余的-kernel" class="headerlink" title="删除多余的 kernel"></a>删除多余的 kernel</h3><p>在前面的 <code>yum update</code> 执行之后，可能会将 kernel 也一起更新，则在启动 CentOS 时启动项中会有很多项。</p>
+<p>确认当前使用的 kernel 版本号:</p>
+<pre><code>$ uname -r
+3.10.0-123.9.3.el7.x86_64
+</code></pre><p>查找当前系统安装的所有 kernel:</p>
+<pre><code>$ rpm -qa | grep kernel | sort
+kernel-3.10.0-123.8.1.el7.x86_64
+kernel-3.10.0-123.9.2.el7.x86_64
+kernel-3.10.0-123.9.3.el7.x86_64
+kernel-devel-3.10.0-123.8.1.el7.x86_64
+kernel-devel-3.10.0-123.9.2.el7.x86_64
+kernel-devel-3.10.0-123.9.3.el7.x86_64
+kernel-headers-3.10.0-123.9.3.el7.x86_64
+kernel-tools-3.10.0-123.9.3.el7.x86_64
+kernel-tools-libs-3.10.0-123.9.3.el7.x86_64
+</code></pre><p>可以看出有三个版本的 kernel，123.8.1、123.9.2 和 123.9.3。除了最新的 kernel 外，建议多保留一个旧 kernel，以免新 kernel 出现问题时可以通过旧 kernel 进入系统。因而此处删除 123.8.1 版本的 kernel:</p>
+<pre><code>sudo yum remove kernel-3.10.0-123.8.1.el7.x86_64
+sudo yum remove kernel-devel-3.10.0-123.8.1.el7.x86_64
+</code></pre><h2 id="基础开发环境"><a href="#基础开发环境" class="headerlink" title="基础开发环境"></a>基础开发环境</h2><h3 id="GCC-系列"><a href="#GCC-系列" class="headerlink" title="GCC 系列"></a>GCC 系列</h3><pre><code>sudo yum install gcc                     # C 编译器
+sudo yum install gcc-c++                 # C++ 编译器
+sudo yum install gcc-gfortran            # Fortran 编译器
+sudo yum install compat-gcc-44           # 兼容 gcc 4.4
+sudo yum install compat-gcc-44-c++       # 兼容 gcc-c++ 4.4
+sudo yum install compat-gcc-44-gfortran  # 兼容 gcc-fortran 4.4
+sudo yum install compat-libf2c-34        # g77 3.4.x 兼容库
+</code></pre><h3 id="软件开发辅助工具"><a href="#软件开发辅助工具" class="headerlink" title="软件开发辅助工具"></a>软件开发辅助工具</h3><pre><code>sudo yum install make
+sudo yum install gdb     # 代码调试器
+sudo yum install cmake   # Cmake
+sudo yum install git     # 版本控制
+</code></pre><h2 id="驱动程序"><a href="#驱动程序" class="headerlink" title="驱动程序"></a>驱动程序</h2><h3 id="显卡驱动"><a href="#显卡驱动" class="headerlink" title="显卡驱动"></a>显卡驱动</h3><p>Linux 默认只使用开源的显卡驱动，就目前的情况来看，开源驱动的效果还是不错的，但跟官方的<br>闭源驱动相比还是有一定差距。最明显的区别是，在使用 SAC 的 ppk 功能放大波形时，使用开源驱动会<br>出现延迟，而使用官方闭源则整个过程非常顺畅。</p>
+<p>关于显卡驱动的安装，请参考 <a href="/install-nvidia-drivers-under-linux.html">Linux 下安装 nvidia 显卡驱动</a><br>一文中的 “从 ELRepo 源中安装驱动” 部分。</p>
+<p><strong>注意</strong>：目前的显卡驱动似乎有问题，安装后终端有时会出现屏幕闪烁、一屏文字上下重复跳动的情况，<br>稍微有些影响用 vim 写代码。是否要安装显卡驱动自己决定。</p>
+<h3 id="NTFS-驱动"><a href="#NTFS-驱动" class="headerlink" title="NTFS 驱动"></a>NTFS 驱动</h3><p>CentOS 下默认无法挂载 NTFS 格式的硬盘。需安装 nfts-3g 即可实现即插即用:</p>
+<pre><code>sudo yum install ntfs-3g
+</code></pre><h2 id="进阶开发环境"><a href="#进阶开发环境" class="headerlink" title="进阶开发环境"></a>进阶开发环境</h2><h3 id="Java-环境"><a href="#Java-环境" class="headerlink" title="Java 环境"></a>Java 环境</h3><p>Java 的一大特色在于跨平台，安装了 Java 运行环境，即可运行 Java 程序:</p>
+<pre><code>sudo yum install java                        # java 运行环境
+</code></pre><h3 id="Clang-系列"><a href="#Clang-系列" class="headerlink" title="Clang 系列"></a>Clang 系列</h3><p>Clang 可以认为是 GCC 的替代品，可以用于编译 C、C++、Objective-C 和 Objective-C++。其提供了更友好的<br>报错信息，在有些方面比 GCC 更友好，同时其提供了一个代码静态分析器，可以用于分析代码中可能出现的 bug 和内存溢出问题。</p>
+<pre><code>sudo yum install clang             # clang 编译器
+sudo yum install clang-analyzer    # clang 静态分析器
+</code></pre><h3 id="Intel-系列"><a href="#Intel-系列" class="headerlink" title="Intel 系列"></a>Intel 系列</h3><p>Intel 的大部分软件都是非开源且收费的，但同时部分软件也提供了 Linux 下的非商业免费版。<br>比如 icc、mkl 数学库以及代码性能分析工具等。</p>
+<p>Intel 软件的申请以及安装参考《<a href="/intel-non-commercial-software.html">Intel 非商业免费开发工具</a>》。</p>
+<p>还有一点需要注意的是，Intel 也提供了并行相关的几个命令，比如 mpicc、mpirun。所以 openmpi、mpich<br>和 intel 三者，在并行时只能用其中一个。</p>
+<h3 id="并行计算"><a href="#并行计算" class="headerlink" title="并行计算"></a>并行计算</h3><p>并行可以用 openmpi，也可以用 mpich，二者的功能可以认为是完全相同的。由于二者提供了几乎一样的命令，<br>所以二者可以同时安装，但是不可以同时处于使用状态。</p>
+<h4 id="openmpi"><a href="#openmpi" class="headerlink" title="openmpi"></a>openmpi</h4><p>安装 openmpi:</p>
+<pre><code>sudo yum install openmpi openmpi-devel
+</code></pre><p>安装后，二进制文件位于 <code>/usr/lib64/openmpi/bin</code> 下，动态库文件位于 <code>/usr/lib64/openmpi/lib</code><br>下，因而实际使用的话还需要额外的配置，在 <code>.bashrc</code> 中加入如下语句:</p>
+<pre><code>export PATH=/usr/lib64/openmpi/bin/:${PATH}
+module load mpi/openmpi-x86_64
+</code></pre><p>PS：要使用 <code>module</code> 命令需要先安装 <code>environment-modules</code> 包。</p>
+<h4 id="mpich"><a href="#mpich" class="headerlink" title="mpich"></a>mpich</h4><p>安装 mpich:</p>
+<pre><code>sudo yum install mpich mpich-devel
+</code></pre><p>安装后，二进制文件位于 <code>/usr/lib64/mpich/bin</code> 下，动态库文件位于 <code>/usr/lib64/mpich/lib</code> 下，<br>因而实际使用的话还需要额外的配置，在 <code>.bashrc</code> 中加入如下语句:</p>
+<pre><code>export PATH=/usr/lib64/mpich/bin/:${PATH}
+module load mpi/mpich-x86_64
+</code></pre><h2 id="脚本语言环境"><a href="#脚本语言环境" class="headerlink" title="脚本语言环境"></a>脚本语言环境</h2><h3 id="Perl"><a href="#Perl" class="headerlink" title="Perl"></a>Perl</h3><p>CentOS 7.0 自带了 Perl 5.16.3（2013 年 03 月 11 日发布），目前的最新版本为 5.20.1（2014 年 09 月 14 日发布）。</p>
+<h4 id="系统自带-Perl"><a href="#系统自带-Perl" class="headerlink" title="系统自带 Perl"></a>系统自带 Perl</h4><p>系统自带 Perl，就目前来看，版本不算老，基本够用。官方源和 EPEL 源中提供了 1000 多个模块，可以直接用 yum 安装:</p>
+<pre><code>sudo yum install perl-Parallel-ForkManager  # 并行模块
+</code></pre><p>若源中没有已打包好的模块，也可以使用 perl 自带的 cpan 来安装模块。</p>
+<p>优先级：yum &gt; cpan。</p>
+<h4 id="plenv-管理新版本"><a href="#plenv-管理新版本" class="headerlink" title="plenv 管理新版本"></a>plenv 管理新版本</h4><p>若需要使用最新版本的 perl，可以使用 <a href="/perl-plenv.html">plenv</a> 安装新版本的 perl，并使用 plenv 提供的 cpanm 命令安装模块:</p>
+<pre><code>cpanm install Parallel::ForkManager # 并行模块
+</code></pre><h3 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h3><p>CentOS 7.0 自带 Python 2.7.5，目前 Python 2 的最新版本为 2.7.8，Python 3 的最新版本为 3.4.2。</p>
+<h4 id="系统自带-Python"><a href="#系统自带-Python" class="headerlink" title="系统自带 Python"></a>系统自带 Python</h4><p>系统自带的 Python 2.7.5，基本已经够用，Python 2 常用的模块在官方源或 EPEL 源中也有有编译好的包，<br>因而直接通过 yum 安装即可:</p>
+<pre><code>sudo yum install python-matplotlib  # 2D 绘图库
+sudo yum install PyQt4  # Qt4 的 Python 绑定
+sudo yum install numpy  # 数组操作库
+sudo yum install scipy  # 科学计算库
+sudo yum install python-requests  # 网页请求
+sudo yum install python-docopt  # 命令行参数分析器
+sudo yum install gdal-python    # gdal 的 Python 绑定
+</code></pre><h4 id="pyenv-管理-Python3"><a href="#pyenv-管理-Python3" class="headerlink" title="pyenv 管理 Python3"></a>pyenv 管理 Python3</h4><p>Python2 与 Python3 之间是不完全兼容的，而我以 Python3 为主，所以需要安装一个 Python3。</p>
+<p>首先，安装 <a href="/python-pyenv.html">pyenv</a> 来管理多个 Python 版本，然后利用 pyenv 安装 anaconda3<br>（即 Python3.4）。anaconda 自带了众多科学计算所需的包，免去了安装的麻烦，对于其他包，<br>则可以利用 Python 自带的 pip 安装:</p>
+<pre><code>pip install requests
+pip install docopt
+</code></pre><h2 id="编程相关软件"><a href="#编程相关软件" class="headerlink" title="编程相关软件"></a>编程相关软件</h2><h3 id="编辑器"><a href="#编辑器" class="headerlink" title="编辑器"></a>编辑器</h3><p>写代码的时候选一个好用的编辑器很重要，用的比较多的编辑器如下：</p>
+<ol>
+<li>vim</li>
+<li>emacs</li>
+<li>atom</li>
+<li>sublime text 3</li>
+<li>Visual Studio Code</li>
+</ol>
+<h3 id="IDE"><a href="#IDE" class="headerlink" title="IDE"></a>IDE</h3><ul>
+<li>Python IDE：<a href="https://www.jetbrains.com/pycharm/" target="_blank" rel="external">PyCharm Community Edition</a></li>
+</ul>
+<h2 id="日常软件"><a href="#日常软件" class="headerlink" title="日常软件"></a>日常软件</h2><h3 id="Office-套件"><a href="#Office-套件" class="headerlink" title="Office 套件"></a>Office 套件</h3><h4 id="LibreOffice"><a href="#LibreOffice" class="headerlink" title="LibreOffice"></a>LibreOffice</h4><p>大多数 Linux 发行版都自带 LibreOffice:</p>
+<pre><code>sudo yum install libreoffice
+</code></pre><p>LibreOffice 与 Microsoft Office 的兼容性不太好，操作界面与 MS Office 也有较大差异，让人不太习惯。</p>
+<h4 id="WPS-Office"><a href="#WPS-Office" class="headerlink" title="WPS Office"></a>WPS Office</h4><p>若在 Linux 下对于文档处理有更高一些的要求，可以尝试目前还处于测试版的 WPS Office for Linux。<br>WPS Office 的兼容性以及界面都比 LibreOffice 要好很多，值得期待，当然还是不能做到完全兼容 MS<br>Office。</p>
+<p>安装过程参考 <a href="/wps-office-for-centos7.html">CentOS 下安装 WPS Office</a> 一文。</p>
+<h3 id="PS-PDF-阅读器"><a href="#PS-PDF-阅读器" class="headerlink" title="PS/PDF 阅读器"></a>PS/PDF 阅读器</h3><p>系统自带的 evince 阅读器，可以打开 PS 和 PDF 文件，基本足够日常的使用了。</p>
+<h4 id="zathura"><a href="#zathura" class="headerlink" title="zathura"></a>zathura</h4><p>zathura 可以查看 PS、PDF、djvu 格式的文件，可以作为 evince 的替代品:</p>
+<pre><code>sudo yum install zathura zathura-plugins-all
+</code></pre><h4 id="ghostscript"><a href="#ghostscript" class="headerlink" title="ghostscript"></a>ghostscript</h4><pre><code>sudo yum install ghostscript
+</code></pre><h4 id="master-pdf-editor"><a href="#master-pdf-editor" class="headerlink" title="master-pdf-editor"></a>master-pdf-editor</h4><p>官方网站: <a href="https://code-industry.net/free-pdf-editor/" target="_blank" rel="external">https://code-industry.net/free-pdf-editor/</a></p>
+<pre><code>sudo yum localinstall http://get.code-industry.net/public/master-pdf-editor3-3.2.62-1.x86_64.rpm
+</code></pre><h3 id="TeX-Live-2015"><a href="#TeX-Live-2015" class="headerlink" title="TeX Live 2015"></a>TeX Live 2015</h3><p>系统是自带了 TeXLive，版本较老，还是安装最新版比较好。</p>
+<p>参考 <a href="/install-texlive-under-linux.html">Linux 下安装 TeXLive</a> 一文。</p>
+<h3 id="Mendeley"><a href="#Mendeley" class="headerlink" title="Mendeley"></a>Mendeley</h3><p>Mendeley 是一个跨平台的文献管理软件，其内部自带了一个可以添加注释的 PDF 阅读器。</p>
+<p>下载 Generic Linux (64 bits)：<a href="http://www.mendeley.com/download-mendeley-desktop" target="_blank" rel="external">http://www.mendeley.com/download-mendeley-desktop</a></p>
+<p>安装:</p>
+<pre><code>tar -xvf mendeleydesktop-1.12.3-linux-x86_64.tar.bz2  # 解压
+sudo mv mendeleydesktop /opt  # 复制到 / opt 下
+cd /opt/mendeleydesktop/bin   # cd 进去
+./install-mendeley-link-handler.sh /opt/mendeleydesktop/bin/mendeleydesktop
+sudo yum install qtwebkit  # 安装依赖包
+</code></pre><p>注销重新登陆，在 Application-&gt;Education 下即可看到 mendeley 的相关项目。不过是<br>没有软件的图标的，强迫症不能忍，用下面的命令解决:</p>
+<pre><code>cp /opt/mendeleydesktop/share/icons/hicolor/128x128/apps/mendeleydesktop.png ~/.local/share/icons/
+</code></pre><h3 id="Google-Chrome-浏览器"><a href="#Google-Chrome-浏览器" class="headerlink" title="Google Chrome 浏览器"></a>Google Chrome 浏览器</h3><p>默认的浏览器是 Firefox，还是更喜欢 Chrome 浏览器。</p>
+<p>Google 官方源在国内可能无法正常访问，故而添加 Fedora 中文社区提供的镜像源:</p>
+<pre><code>sudo wget http://repo.fdzh.org/chrome/google-chrome-mirrors.repo -P /etc/yum.repos.d/
+</code></pre><p>安装:</p>
+<pre><code>sudo yum install google-chrome-stable
+</code></pre><h3 id="Opera-浏览器"><a href="#Opera-浏览器" class="headerlink" title="Opera 浏览器"></a>Opera 浏览器</h3><p>也可以选择 Opera 浏览器。</p>
+<p>下载地址：<a href="http://www.opera.com/download/guide/?os=linux" target="_blank" rel="external">http://www.opera.com/download/guide/?os=linux</a></p>
+<p>选择 CentOS RPM package 进行下载。下载完成后，执行:</p>
+<pre><code>sudo yum localinstall opera-12.16-1860.x86_64.rpm
+</code></pre><p>想要卸载的话，就执行:</p>
+<pre><code>sudo yum remove opera
+</code></pre><h3 id="Flash-插件"><a href="#Flash-插件" class="headerlink" title="Flash 插件"></a>Flash 插件</h3><p>Flash 插件主要是看在线视频的时候要用。Google 浏览器自带了 Flash 插件，所以这里安装的 flash 插件主要是为了 firefox。</p>
+<pre><code>sudo rpm -ivh http://linuxdownload.adobe.com/adobe-release/adobe-release-x86_64-1.0-1.noarch.rpm
+sudo rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-adobe-linux
+sudo yum install flash-plugin
+</code></pre><h3 id="解压软件"><a href="#解压软件" class="headerlink" title="解压软件"></a>解压软件</h3><p>解压 7z 或 zip 格式需要 p7zip，由 EPEL 提供:</p>
+<pre><code>sudo yum install p7zip
+</code></pre><p>解压 rar 格式可以使用 <a href="https://unarchiver.c3.cx/commandline" target="_blank" rel="external">unar</a>，该软件位于 EPEL 源中：</p>
+<pre><code>sudo yum install unar
+</code></pre><h3 id="FTP-客户端"><a href="#FTP-客户端" class="headerlink" title="FTP 客户端"></a>FTP 客户端</h3><p>FTP 客户端，还是有界面的 filezilla 比较方便些。</p>
+<pre><code>sudo yum install filezilla
+</code></pre><h3 id="Google-Earth"><a href="#Google-Earth" class="headerlink" title="Google Earth"></a>Google Earth</h3><p>到 <a href="https://www.google.com/earth/download/ge/agree.html" target="_blank" rel="external">https://www.google.com/earth/download/ge/agree.html</a> 下载64位rpm包，执行如下命令安装:</p>
+<pre><code>sudo yum localinstall google-earth-stable_current_x86_64.rpm
+</code></pre><h2 id="效率类软件"><a href="#效率类软件" class="headerlink" title="效率类软件"></a>效率类软件</h2><p>这一类工具能够在不同方面提高科研的效率，也提高了使用者的体验。</p>
+<h3 id="终端模拟器"><a href="#终端模拟器" class="headerlink" title="终端模拟器"></a>终端模拟器</h3><p>Gnome 自带的终端模拟器是 gnome-terminal。经常会需要开十几个终端，切换和管理起来比较麻烦。</p>
+<h4 id="terminator"><a href="#terminator" class="headerlink" title="terminator"></a>terminator</h4><p>terminator 有很多功能，我只用到了终端分割的功能。 <code>Ctrl+Shift+O</code> 对终端水平分隔，<br><code>Ctrl+Shift+E</code> 对终端垂直分隔， <code>Alt + 上下左右</code> 可以在各子终端中切换。terminator 由 Nux Dextop 提供:</p>
+<pre><code>sudo yum install terminator
+</code></pre><h4 id="guake"><a href="#guake" class="headerlink" title="guake"></a>guake</h4><p>有些时候需要临时执行一两个命令，但是又不想额外启动一个终端的情况下，guake 是个不错的选择。</p>
+<pre><code>sudo yum install guake
+</code></pre><p>安装完成后，在 Application-&gt;System Tools 里找到 guake Terminal 即可启动。按下 F12<br>即可呼出 guake，再次按下 F12 即可隐藏。也可在终端执行 <code>guake-prefs</code> 对 gauke 进行配置。</p>
+<h3 id="zsh-与-oh-my-zsh"><a href="#zsh-与-oh-my-zsh" class="headerlink" title="zsh 与 oh my zsh"></a>zsh 与 oh my zsh</h3><p>Linux 下有很多 shell，比如最常见的 bash，除此之外还有 csh、ksh。zsh 也是一个 shell。</p>
+<p>zsh 的特点在于：</p>
+<ul>
+<li>语法基本完全兼容于 bash，一般用户完全体会不到其区别</li>
+<li>zsh 提供命令补全特性，比 bash 的补全要更好用</li>
+<li>可配置性强</li>
+</ul>
+<p>完全不经配置的 zsh 已经很好用了，一般用户也没必要花时间研究配置。<br><a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="external">oh my zsh</a> 是一群人一起维护的一套 zsh 配置文件。<br>直接用这个配置文件，稍稍了解一点会有更好的体验。</p>
+<p>安装 zsh:</p>
+<pre><code>sudo yum install zsh
+</code></pre><p>安装 oh my zsh:</p>
+<pre><code>curl -L http://install.ohmyz.sh | sh
+</code></pre><p>上面的命令，做了如下几件事情：</p>
+<ul>
+<li>下载 <code>oh my zsh</code> 到 <code>~/.oh-my-zsh</code></li>
+<li>备份已有的 zsh 配置文件 <code>~/.zshrc</code> ，并复制新的 <code>.zshrc</code> 文件</li>
+<li>将当前用户的默认 shell 由 bash 改成 zsh</li>
+</ul>
+<p>第三步中，会报错如下： <code>chsh: &quot;/usr/bin/zsh&quot; is not listed in /etc/shells.</code> ，需要手动修改默认 shell:</p>
+<pre><code>chsh -s /bin/zsh
+</code></pre><p>chsh 命令修改的是 login shell，因而需要退出当前用户并重新登陆，以后用户的默认 shell<br>就从 bash 变成了 zsh，所有的配置都不用写到 <code>.bashrc</code> 而要写到 <code>.zshrc</code> 中。</p>
+<p>在 <code>.zshrc</code> 中可以选择喜欢的主题，以及适当数量的插件。下面列出我在用的插件:</p>
+<ol>
+<li><p>git</p>
+<p>该插件为 git 的众多常用命令提供了更简单的别名，比如 <code>git status</code> 的别名是 <code>gst</code>，<br>大大减少了击键数。但该插件中 <code>git mergetool --no-prompt</code> 的别名是 <code>gmt</code>，<br>与 GMT 软件冲突，需要将该插件的目录 git 复制到 custom/plugins 下，然后删除其中的 gmt 别名；</p>
+</li>
+<li><p>命令补全插件: pip, pyenv</p>
+</li>
+<li>sudo：按两下 <code>ESC</code> 即可在当前命令前加上 <code>sudo</code></li>
+<li>yum：为常见的 yum 命令提供别名</li>
+</ol>
+<h3 id="autojump"><a href="#autojump" class="headerlink" title="autojump"></a>autojump</h3><p><a href="https://github.com/joelthelion/autojump" target="_blank" rel="external">autojump</a> 是一个非常智能的目录快速切换的工具。简单演示如下:</p>
+<pre><code>$ pwd
+/home/seisman
+$ cd Desktop
+$ cd /opt
+$ cd /usr/local
+
+# 用 j 命令迅速从 / usr/local 跳转到与 des 匹配的目录，这里只有 Desktop 可以匹配
+$ j des
+$ pwd
+/home/seisman/Desktop
+</code></pre><p>用法差不多就这样，具体看项目主页。</p>
+<p>安装:</p>
+<pre><code>sudo yum install autojump
+sudo yum install autojump-zsh
+</code></pre><h3 id="中文输入法"><a href="#中文输入法" class="headerlink" title="中文输入法"></a>中文输入法</h3><p>由于使用的是全英文安装，所以默认是没有中文输入法的。</p>
+<p>在“Application”-&gt;“Settings”-&gt;“Region &amp; Language” 中将“Chinese（Intelligent Pinyin）”添加到“Input Sources” 中即可使用中文输入法。默认使用“Shift”键切换中文输入法。</p>
+<h3 id="等宽字体"><a href="#等宽字体" class="headerlink" title="等宽字体"></a>等宽字体</h3><p>编程要用等宽字体，这点是常识了。一款适合编程的等宽字体，至少要满足如下几个要求：</p>
+<ol>
+<li>易于区分 “1”、“i” 和“l”</li>
+<li>易于区分 “0”、“o” 和“O”</li>
+<li>易于区分中文下的左引号和右引号</li>
+<li>美观</li>
+</ol>
+<p>目前选择的 Source Code Pro。将解压后的字体文件放在 <code>~/.fonts</code> 目录下，并修改终端、gedit 以及其他编辑器、IDE 等的默认字体。</p>
+<h2 id="虚拟机"><a href="#虚拟机" class="headerlink" title="虚拟机"></a>虚拟机</h2><p>有时候可能需要在 Windows 下做一些操作，如果机器性能足够好的话，可以安装虚拟机。</p>
+<h3 id="VirtualBox-虚拟机"><a href="#VirtualBox-虚拟机" class="headerlink" title="VirtualBox 虚拟机"></a>VirtualBox 虚拟机</h3><p>VirtuabBox 的安装:</p>
+<pre><code>wget http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
+sudo mv virtualbox.repo /etc/yum.repos.d/
+sudo yum install VirtualBox-5.0
+</code></pre><p>需要注意两点：</p>
+<ul>
+<li>若机器性能不够，虚拟机的使用体验会非常差，所以不建议在老机器上使用；</li>
+<li>更新 kernel 之后需要执行 <code>sudo /sbin/rcvboxdrv setup</code> ；</li>
+<li>在 VirtualBox 安装虚拟系统后，记得使用 “设备”-&gt;“安装增强功能”，使用效果会更好；</li>
+</ul>
+<h3 id="gnome-boxes"><a href="#gnome-boxes" class="headerlink" title="gnome-boxes"></a>gnome-boxes</h3><p>gnome-boxes 是 GNOME3 开发的一个虚拟机工具，使用体验不如 VirtualBox:</p>
+<pre><code>sudo yum install gnome-boxes
+</code></pre><h3 id="Wine"><a href="#Wine" class="headerlink" title="Wine"></a>Wine</h3><p>Wine 是一个可以让 Windows 程序运行在 Linux 下的软件。类似虚拟机，但跟虚拟机又不太一样:</p>
+<pre><code>sudo yum install wine
+</code></pre><h2 id="同步网盘"><a href="#同步网盘" class="headerlink" title="同步网盘"></a>同步网盘</h2><p>网盘根据功能大概可以分为两类：同步网盘和备份网盘。既然是同步网盘，Linux 下<br>的客户端必不可少。就目前已知的情况来看，CentOS7 下能使用的同步网盘只有三个：<br>Dropbox、MEGA 和坚果云。</p>
+<p>我主要用同步网盘将 Linux 机器上的 PDF 文献同步到 iPad 上。</p>
+<h3 id="Dropbox"><a href="#Dropbox" class="headerlink" title="Dropbox"></a>Dropbox</h3><p>又是一个被墙的工具，熟练掌握科学上网技巧的人可以使用，一般人还是不要用了。</p>
+<pre><code>wget https://www.dropbox.com/download?dl=packages/fedora/nautilus-dropbox-1.6.2-1.fedora.x86_64.rpm
+sudo rpm -i nautilus-dropbox-1.6.2-1.fedora.x86_64.rpm
+</code></pre><h3 id="MEGA"><a href="#MEGA" class="headerlink" title="MEGA"></a>MEGA</h3><p>MEGA： <a href="https://mega.co.nz/" target="_blank" rel="external">https://mega.co.nz/</a></p>
+<p>免费容量 50G，作为同步盘来说基本是够用了。</p>
+<pre><code># 下载主程序
+wget https://mega.nz/linux/MEGAsync/CentOS_7/x86_64/megasync-CentOS_7.x86_64.rpm
+# 下载文件管理器扩展（可选）
+wget https://mega.nz/linux/MEGAsync/CentOS_7/x86_64/nautilus-megasync-CentOS_7.x86_64.rpm
+sudo yum localinstall megasync-CentOS_7.x86_64.rpm
+sudo yum localinstall nautilus-megasync-CentOS_7.x86_64.rpm
+</code></pre><h3 id="坚果云"><a href="#坚果云" class="headerlink" title="坚果云"></a>坚果云</h3><p>国内的全平台同步网盘，不限空间，但限制每月上传流量 1G，下载流量 3G。</p>
+<pre><code># 坚果云依赖于 notify-python
+sudo yum install notify-python
+# 下载
+wget https://jianguoyun.com/static/exe/installer/fedora/nautilus_nutstore_amd64.rpm
+sudo rpm -i nautilus_nutstore_amd64.rpm
+</code></pre><h2 id="工具软件"><a href="#工具软件" class="headerlink" title="工具软件"></a>工具软件</h2><h3 id="视频下载工具"><a href="#视频下载工具" class="headerlink" title="视频下载工具"></a>视频下载工具</h3><p><a href="https://github.com/soimort/you-get" target="_blank" rel="external">you-get</a> 和 <a href="https://github.com/rg3/youtube-dl" target="_blank" rel="external">youtube-dl</a><br>是两个用于从视频网站上下载视频文件的工具。其中，后者支持的网站更多，但前者对国内的视频网站支持更好。</p>
+<pre><code>pip install you-get
+pip install youtube-dl
+# EPEL 中提供了 youtube-dl 包，因而也可以使用 yum 安装。一般来说，pip 安装的版本更新一些
+</code></pre><h3 id="PDF-处理工具"><a href="#PDF-处理工具" class="headerlink" title="PDF 处理工具"></a>PDF 处理工具</h3><p><a href="http://community.coherentpdf.com/" target="_blank" rel="external">cpdf</a> 是一个跨平台的 PDF 处理工具，可以完成常见的 PDF 合并、<br>切割、加密解密、书签、水印等功能。</p>
+<p>下载已编译好的 <a href="https://github.com/coherentgraphics/cpdf-binaries/archive/master.zip" target="_blank" rel="external">二进制包</a>，<br>解压，并将与自己的平台对应的二进制文件复制到 <code>${HOME}/bin</code> 目录下即可使用。</p>
+<h3 id="BT-软件"><a href="#BT-软件" class="headerlink" title="BT 软件"></a>BT 软件</h3><p>transmission 是 Linux 下常用的 Torrent 下载软件:</p>
+<pre><code>sudo yum install transmission
+</code></pre><p>在 “Application”-&gt;“Internet”-&gt; 中可以启动 transmission。</p>
+<h3 id="uGet"><a href="#uGet" class="headerlink" title="uGet"></a>uGet</h3><p><a href="http://ugetdm.com/" target="_blank" rel="external">http://ugetdm.com/</a></p>
+<p>uGet 是 Linux 下的一个下载工具，支持 HTTP、HTTPS、FTP、Torrent 等，支持多连接，并可以监视剪贴板:</p>
+<pre><code>sudo yum --enablerepo=epel-testing install uget aria2
+</code></pre><h3 id="截图软件-shutter"><a href="#截图软件-shutter" class="headerlink" title="截图软件 shutter"></a>截图软件 shutter</h3><p>GNOME 自带了截图工具。 <code>PrtScn</code> 为截取整个屏幕； <code>Alt+PrtScn</code> 为截取当前窗口；<br><code>Shift+PrtScn</code> 为自定义截屏区域。</p>
+<p><a href="http://shutter-project.org/" target="_blank" rel="external">shutter</a> 是一个功能更强大的截图工具，支持不同的截图方式、<br>图片格式，还支持图片的简单编辑与注释:</p>
+<pre><code>sudo yum install shutter
+</code></pre><p>可以通过 <a href="http://shutter-project.org/faq-help/set-shutter-as-the-default-screenshot-tool/" target="_blank" rel="external">修改快捷键使 shutter 成为默认的截图工具</a>。</p>
+<h3 id="其他工具"><a href="#其他工具" class="headerlink" title="其他工具"></a>其他工具</h3><pre><code>sudo yum install nfs-utils     # 挂载 NFS 文件系统所必须
+sudo yum install xclip         # 终端的文本复制工具
+sudo yum install ImageMagick   # 其中的 import 和 convert 命令很有用
+sudo yum install dos2unix unix2dos  # Windows 和 Linux 换行符互相转换
+sudo yum install meld          # 图形界面下的文件差异比较工具
+</code></pre><h2 id="娱乐"><a href="#娱乐" class="headerlink" title="娱乐"></a>娱乐</h2><h3 id="影音播放器"><a href="#影音播放器" class="headerlink" title="影音播放器"></a>影音播放器</h3><p>Nux Dextop 提供了 mplayer 和 VLC，可以用于播放常见格式的音频和视频，二者选其一安装即可:</p>
+<pre><code>sudo yum install mplayer
+sudo yum install vlc
+</code></pre><h3 id="游戏"><a href="#游戏" class="headerlink" title="游戏"></a>游戏</h3><pre><code>sudo yum install 2048-cli   # 2048 命令行版
+</code></pre><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><a href="http://elrepo.org/tiki/tiki-index.php" target="_blank" rel="external">ELRepo 官方网站</a></li>
+<li><a href="http://elrepo.org/tiki/kmod-nvidia" target="_blank" rel="external">ELRepo kmod-nvidia</a></li>
+<li><a href="http://wiki.centos.org/zh/AdditionalResources/Repositories/GoogleYumRepos" target="_blank" rel="external">CentOS Yum 软件库样例</a></li>
+</ol>
+<h2 id="修订历史"><a href="#修订历史" class="headerlink" title="修订历史"></a>修订历史</h2><ul>
+<li>2017-04-15：初稿；</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat.png" alt="Messiah wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat.jpg" alt="Messiah WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="Messiah Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CentOS/" rel="tag"># CentOS</a>
+          
+            <a href="/tags/Perl/" rel="tag"># Perl</a>
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/20/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Messiah" />
+          <p class="site-author-name" itemprop="name">Messiah</p>
+           
+              <p class="site-description motion-element" itemprop="description">Happy Code Happy life</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="mailto:zhangmengxin188@gmail.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/zhang.mengxin.16" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Messiah163" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.linkedin.com/in/梦欣-张-788766b4/" target="_blank" title="Linkedin">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  Linkedin
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://plus.google.com/u/0/109786624352426899645" target="_blank" title="Google+">
+                  
+                    <i class="fa fa-fw fa-google-plus"></i>
+                  
+                  Google+
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/6071436038" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/zhangmengxin188" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://xclient.info/" title="xclient" target="_blank">xclient</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-CentOS"><span class="nav-number">1.</span> <span class="nav-text">安装 CentOS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备工作"><span class="nav-number">1.1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装过程"><span class="nav-number">1.2.</span> <span class="nav-text">安装过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分区"><span class="nav-number">1.3.</span> <span class="nav-text">分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#真正的安装"><span class="nav-number">1.4.</span> <span class="nav-text">真正的安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对系统的若干修改"><span class="nav-number">2.</span> <span class="nav-text">对系统的若干修改</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#若干原则"><span class="nav-number">2.1.</span> <span class="nav-text">若干原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#给一般账号-root-权限"><span class="nav-number">2.2.</span> <span class="nav-text">给一般账号 root 权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加第三方源"><span class="nav-number">2.3.</span> <span class="nav-text">添加第三方源</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#EPEL"><span class="nav-number">2.3.1.</span> <span class="nav-text">EPEL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ELRepo"><span class="nav-number">2.3.2.</span> <span class="nav-text">ELRepo</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-yum-axelget"><span class="nav-number">2.4.</span> <span class="nav-text">安装 yum-axelget</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第一次全面更新"><span class="nav-number">2.5.</span> <span class="nav-text">第一次全面更新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重启"><span class="nav-number">2.6.</span> <span class="nav-text">重启</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除多余的-kernel"><span class="nav-number">2.7.</span> <span class="nav-text">删除多余的 kernel</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基础开发环境"><span class="nav-number">3.</span> <span class="nav-text">基础开发环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GCC-系列"><span class="nav-number">3.1.</span> <span class="nav-text">GCC 系列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#软件开发辅助工具"><span class="nav-number">3.2.</span> <span class="nav-text">软件开发辅助工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#驱动程序"><span class="nav-number">4.</span> <span class="nav-text">驱动程序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#显卡驱动"><span class="nav-number">4.1.</span> <span class="nav-text">显卡驱动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NTFS-驱动"><span class="nav-number">4.2.</span> <span class="nav-text">NTFS 驱动</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进阶开发环境"><span class="nav-number">5.</span> <span class="nav-text">进阶开发环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-环境"><span class="nav-number">5.1.</span> <span class="nav-text">Java 环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Clang-系列"><span class="nav-number">5.2.</span> <span class="nav-text">Clang 系列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Intel-系列"><span class="nav-number">5.3.</span> <span class="nav-text">Intel 系列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#并行计算"><span class="nav-number">5.4.</span> <span class="nav-text">并行计算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#openmpi"><span class="nav-number">5.4.1.</span> <span class="nav-text">openmpi</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mpich"><span class="nav-number">5.4.2.</span> <span class="nav-text">mpich</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#脚本语言环境"><span class="nav-number">6.</span> <span class="nav-text">脚本语言环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Perl"><span class="nav-number">6.1.</span> <span class="nav-text">Perl</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#系统自带-Perl"><span class="nav-number">6.1.1.</span> <span class="nav-text">系统自带 Perl</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plenv-管理新版本"><span class="nav-number">6.1.2.</span> <span class="nav-text">plenv 管理新版本</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python"><span class="nav-number">6.2.</span> <span class="nav-text">Python</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#系统自带-Python"><span class="nav-number">6.2.1.</span> <span class="nav-text">系统自带 Python</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pyenv-管理-Python3"><span class="nav-number">6.2.2.</span> <span class="nav-text">pyenv 管理 Python3</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编程相关软件"><span class="nav-number">7.</span> <span class="nav-text">编程相关软件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编辑器"><span class="nav-number">7.1.</span> <span class="nav-text">编辑器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IDE"><span class="nav-number">7.2.</span> <span class="nav-text">IDE</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#日常软件"><span class="nav-number">8.</span> <span class="nav-text">日常软件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Office-套件"><span class="nav-number">8.1.</span> <span class="nav-text">Office 套件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#LibreOffice"><span class="nav-number">8.1.1.</span> <span class="nav-text">LibreOffice</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WPS-Office"><span class="nav-number">8.1.2.</span> <span class="nav-text">WPS Office</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PS-PDF-阅读器"><span class="nav-number">8.2.</span> <span class="nav-text">PS/PDF 阅读器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#zathura"><span class="nav-number">8.2.1.</span> <span class="nav-text">zathura</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ghostscript"><span class="nav-number">8.2.2.</span> <span class="nav-text">ghostscript</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#master-pdf-editor"><span class="nav-number">8.2.3.</span> <span class="nav-text">master-pdf-editor</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TeX-Live-2015"><span class="nav-number">8.3.</span> <span class="nav-text">TeX Live 2015</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mendeley"><span class="nav-number">8.4.</span> <span class="nav-text">Mendeley</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Google-Chrome-浏览器"><span class="nav-number">8.5.</span> <span class="nav-text">Google Chrome 浏览器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Opera-浏览器"><span class="nav-number">8.6.</span> <span class="nav-text">Opera 浏览器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Flash-插件"><span class="nav-number">8.7.</span> <span class="nav-text">Flash 插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解压软件"><span class="nav-number">8.8.</span> <span class="nav-text">解压软件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FTP-客户端"><span class="nav-number">8.9.</span> <span class="nav-text">FTP 客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Google-Earth"><span class="nav-number">8.10.</span> <span class="nav-text">Google Earth</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#效率类软件"><span class="nav-number">9.</span> <span class="nav-text">效率类软件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#终端模拟器"><span class="nav-number">9.1.</span> <span class="nav-text">终端模拟器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#terminator"><span class="nav-number">9.1.1.</span> <span class="nav-text">terminator</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#guake"><span class="nav-number">9.1.2.</span> <span class="nav-text">guake</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zsh-与-oh-my-zsh"><span class="nav-number">9.2.</span> <span class="nav-text">zsh 与 oh my zsh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#autojump"><span class="nav-number">9.3.</span> <span class="nav-text">autojump</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中文输入法"><span class="nav-number">9.4.</span> <span class="nav-text">中文输入法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#等宽字体"><span class="nav-number">9.5.</span> <span class="nav-text">等宽字体</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚拟机"><span class="nav-number">10.</span> <span class="nav-text">虚拟机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#VirtualBox-虚拟机"><span class="nav-number">10.1.</span> <span class="nav-text">VirtualBox 虚拟机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gnome-boxes"><span class="nav-number">10.2.</span> <span class="nav-text">gnome-boxes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Wine"><span class="nav-number">10.3.</span> <span class="nav-text">Wine</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步网盘"><span class="nav-number">11.</span> <span class="nav-text">同步网盘</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Dropbox"><span class="nav-number">11.1.</span> <span class="nav-text">Dropbox</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MEGA"><span class="nav-number">11.2.</span> <span class="nav-text">MEGA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#坚果云"><span class="nav-number">11.3.</span> <span class="nav-text">坚果云</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工具软件"><span class="nav-number">12.</span> <span class="nav-text">工具软件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#视频下载工具"><span class="nav-number">12.1.</span> <span class="nav-text">视频下载工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PDF-处理工具"><span class="nav-number">12.2.</span> <span class="nav-text">PDF 处理工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BT-软件"><span class="nav-number">12.3.</span> <span class="nav-text">BT 软件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#uGet"><span class="nav-number">12.4.</span> <span class="nav-text">uGet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#截图软件-shutter"><span class="nav-number">12.5.</span> <span class="nav-text">截图软件 shutter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他工具"><span class="nav-number">12.6.</span> <span class="nav-text">其他工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#娱乐"><span class="nav-number">13.</span> <span class="nav-text">娱乐</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#影音播放器"><span class="nav-number">13.1.</span> <span class="nav-text">影音播放器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#游戏"><span class="nav-number">13.2.</span> <span class="nav-text">游戏</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">14.</span> <span class="nav-text">参考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修订历史"><span class="nav-number">15.</span> <span class="nav-text">修订历史</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Messiah</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="#">梦欣笔记</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="#">
+  Messiah
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"> 本站访客数 </i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"> 本站总访问量 </i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2131805"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      $('#local-search-input').focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

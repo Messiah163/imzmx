@@ -49,8 +49,8 @@ menu:
   archives: /archives
   categories: /categories
   tags: /tags
-  collections: #
-  links: #
+  #collections: #
+  #links: #
   donations: /donations
   about: /about
   sitemap: /sitemap.xml
@@ -78,7 +78,11 @@ menu_icons:
   donations: rmb
 
 
-
+# title
+links_title: Links
+links:
+  MacTalk: http://macshuo.com/
+  xclient: http://xclient.info/
 
 # ---------------------------------------------------------------
 # Scheme Settings
@@ -310,13 +314,13 @@ highlight_theme: normal
 
 # MathJax Support
 mathjax:
-  enable: false
-  per_page: false
+  enable: true
+  per_page: true
   cdn: //cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML
 
 
 # Han Support docs: https://hanzi.pro/
-han: false
+han: true
 
 # Swiftype Search API Key
 #swiftype_key:
@@ -330,14 +334,14 @@ han: false
 # Disqus
 disqus:
   enable: false
-  shortname:
+  shortname: imzmx
   count: true
 
 # Hypercomments
 #hypercomments_id:
 
-# Gentie productKey
-#gentie_productKey:
+# Gentie productKey 网易云跟帖
+#gentie_productKey: 100e5b2badcc46fd937a4600b8dbb2de
 
 # changyan
 changyan:
@@ -345,42 +349,42 @@ changyan:
   appid:
   appkey:
 
-# Support for youyan comments system.
+# Support for youyan comments system.友言
 # You can get your uid from http://www.uyan.cc
-#youyan_uid: your uid
+youyan_uid: 2131805
 
-# Support for LiveRe comments system.
+# Support for LiveRe comments system. 来必力
 # You can get your uid from https://livere.com/insight/myCode (General web site)
-#livere_uid: your uid
+#livere_uid: MTAyMC8yODM5My80OTY0
 
-# Baidu Share
+# Baidu Share 百度分享
 # Available value:
 #    button | slide
 # Warning: Baidu Share does not support https.
-#baidushare:
+#baidushare: true
 ##  type: button
 
 # Share
-#jiathis:
+jiathis: ture
 # Warning: JiaThis does not support https.
-#add_this_id:
+add_this_id: ra-5901a8265d67afa4
 
 # Share
 #duoshuo_share: true
 
 # Google Webmaster tools verification setting
 # See: https://www.google.com/webmasters/
-#google_site_verification:
+google_site_verification: X1CqvrVbud3VpYImf8ssXGByw2c4Ox_R05fXCorkciE
 
 # Google Analytics
-#google_analytics:
+google_analytics: 98206095-1
 
 # Yandex Webmaster tools verification setting
 # See: https://webmaster.yandex.ru/
 #yandex_site_verification:
 
 # CNZZ count
-#cnzz_siteid:
+cnzz_siteid: 1261819063
 
 # Application Insights
 # See https://azure.microsoft.com/en-us/services/application-insights/
@@ -390,7 +394,7 @@ changyan:
 # user_id must NOT be null when admin_enable is true!
 # you can visit http://dev.duoshuo.com get duoshuo user id.
 duoshuo_info:
-  ua_enable: true
+  ua_enable: false
   admin_enable: false
   user_id: 0
   #admin_nickname: Author
@@ -428,37 +432,37 @@ vkontakte_api:
 # You can visit https://leancloud.cn get AppID and AppKey.
 leancloud_visitors:
   enable: false
-  app_id: #<app_id>
-  app_key: #<app_key>
+  app_id: T5j4cqr8Cs3l3XnsMrD5hzSt-gzGzoHsz
+  app_key: ixIYx7xNAqEcH38BOfppBmQM
 
 # Show PV/UV of the website/page with busuanzi.
 # Get more information on http://ibruce.info/2015/04/04/busuanzi/
 busuanzi_count:
   # count values only if the other configs are false
-  enable: false
+  enable: true
   # custom uv span for the whole site
   site_uv: true
-  site_uv_header: <i class="fa fa-user"></i>
-  site_uv_footer:
+  site_uv_header: <i class="fa fa-user"> 本站访客数 </i>
+  site_uv_footer: 人次
   # custom pv span for the whole site
   site_pv: true
-  site_pv_header: <i class="fa fa-eye"></i>
-  site_pv_footer:
+  site_pv_header: <i class="fa fa-eye"> 本站总访问量 </i>
+  site_pv_footer: 次
   # custom pv span for one page only
   page_pv: true
-  page_pv_header: <i class="fa fa-file-o"></i>
-  page_pv_footer:
+  page_pv_header: <i class="fa fa-file-o"> 本文总阅读量 </i>
+  page_pv_footer: 次
 
 
 # Tencent analytics ID
-# tencent_analytics:
+# tencent_analytics: 61897233
 
 # Tencent MTA ID
-# tencent_mta:
+# tencent_mta: 500443197
 
 
 # Enable baidu push so that the blog will push the url to baidu automatically which is very helpful for SEO
-baidu_push: false
+baidu_push: true
 
 # Google Calendar
 # Share your recent schedule to others via calendar page
@@ -509,7 +513,7 @@ exturl: false
 #! ---------------------------------------------------------------
 
 # Motion
-use_motion: true
+use_motion: false
 
 # Fancybox
 fancybox: true
@@ -570,7 +574,7 @@ vendors:
 
   # Internal version: 4.6.2
   # See: http://fontawesome.io/
-  fontawesome:
+  fontawesome: #//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css
 
   # Internal version: 1
   # https://www.algolia.com
@@ -604,7 +608,16 @@ vendors:
   # https://github.com/ethantw/Han
   han:
 
+#打赏
+reward_comment: 坚持原创技术分享，您的支持将鼓励我继续创作！
+wechatpay: /images/wechat.jpg
+alipay: /images/alipay.jpg
 
+# Wechat Subscriber
+wechat_subscriber:
+  enabled: true
+  qcode: /images/wechat.png
+  description: 欢迎您扫一扫上面的微信公众号，订阅我的博客！
 
 # Assets
 css: css

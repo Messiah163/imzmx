@@ -65,9 +65,9 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: indigo
+#theme: indigo
 #theme: yilia
-#theme: next
+theme: next
 
 feed:
   type: atom
@@ -94,6 +94,22 @@ jsonContent:
     excerpt: false
     categories: false
     tags: true
+
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
+
+#algolia:
+#  applicationID: 2KIV20C6I4
+#  apiKey: 57aae57236c185f12148468ea376cd8b
+#  adminApiKey: 1c57c6c3d53fe2a60187653978175904
+#  indexName: imzmx
+#  chunkSize: 5000
+
+# Swiftype Search Key
+#swiftype_key: ubo_yxQNb9XoUBte8GPo
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
