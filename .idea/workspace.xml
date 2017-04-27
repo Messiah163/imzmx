@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b0490de3-4f32-4186-a4f7-0e0a0db4d2b7" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/markdown-navigator.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/themes/next/languages/zh-Hans.yml" afterPath="$PROJECT_DIR$/themes/next/languages/zh-CN.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.deploy_git" afterPath="$PROJECT_DIR$/.deploy_git" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_config.yml" afterPath="$PROJECT_DIR$/_config.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/themes/indigo/_config.yml" afterPath="$PROJECT_DIR$/themes/indigo/_config.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/themes/next/_config.yml" afterPath="$PROJECT_DIR$/themes/next/_config.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/themes/next/layout/_partials/footer.swig" afterPath="$PROJECT_DIR$/themes/next/layout/_partials/footer.swig" />
-    </list>
+    <list default="true" id="b0490de3-4f32-4186-a4f7-0e0a0db4d2b7" name="Default" comment="" />
     <ignored path="imzmx.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -336,6 +327,9 @@
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
   </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="b0490de3-4f32-4186-a4f7-0e0a0db4d2b7" name="Default" comment="" />
@@ -343,7 +337,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1493114412711</updated>
-      <workItem from="1493114414012" duration="8210000" />
+      <workItem from="1493114414012" duration="8411000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit&#10;">
       <created>1493172466591</created>
@@ -356,7 +350,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8210000" />
+    <option name="totallyTimeSpent" value="8411000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="38" y="23" width="1189" height="739" extended-state="0" />
