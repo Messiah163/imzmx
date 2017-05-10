@@ -33,6 +33,8 @@ Dirty Drem Start取前两个字为自己blog名（哈哈以前别人给取得英
 
 ## 联系方式
 
-学术讨论请通过邮件联系。
+讨论交流请联系。
 
 - 电子邮箱: [zhangmengxin188@gmail.com](mailto:zhangmengxin188@gmail.com)
+
+也欢迎在评论区留言

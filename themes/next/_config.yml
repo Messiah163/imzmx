@@ -51,7 +51,7 @@ menu:
   tags: /tags
   #collections: #
   #links: #
-  donations: /donations
+  guomao: /guomao
   about: /about
   sitemap: /sitemap.xml
   commonweal: /404.html
@@ -75,7 +75,7 @@ menu_icons:
   commonweal: heartbeat
   collections: book
   links: link
-  donations: rmb
+  guomao: renren
 
 
 # title
@@ -160,7 +160,7 @@ social:
   Linkedin: https://www.linkedin.com/in/梦欣-张-788766b4/
   #人人: http://www.renren.com/353594330
   Google+: https://plus.google.com/u/0/109786624352426899645
-  #Skype: mailto:zmx2528@xnmsn.cn
+  Skype: mailto:zmx2528@xnmsn.cn
   微博: http://weibo.com/6071436038
   Twitter: https://twitter.com/zhangmengxin188
 
@@ -179,7 +179,7 @@ social_icons:
   GitHub: github
   Linkedin: linkedin
   #人人: renren
-  #Skype: skype
+  Skype: skype
   Google+: google-plus
   微博: weibo
   Twitter: twitter

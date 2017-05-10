@@ -4,6 +4,7 @@ author: Messiah
 date: 2017-04-15
 updated: 2017-04-19
 categories: Linux
+comments: true
 tags: [CentOS, Perl, Python]
 ---
 
