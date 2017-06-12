@@ -23,12 +23,12 @@ menu:
   user:
     text: 关于
     url: /about
-  users:
-    text: 文天10国贸花名册
-    url: /ITE
-  #github:
-  #  url: https://github.com/Messiah163
-  #  target: _blank
+  #users:
+   # text: 文天10国贸花名册
+   # url: /ITE
+  github:
+    url: https://github.com/imzhangmengxin
+    target: _blank
   #weibo:
   #  text: 微博
   #  url: http://www.weibo.com/6071436038
@@ -36,9 +36,9 @@ menu:
   #facebook:
   #  url: https://www.facebook.com/zhang.mengxin.16
   #  target: _blank
-  #linkedin:
-  #  url: https://www.linkedin.com/in/梦欣-张-788766b4
-  #  target: _blank
+  linkedin:
+    url: https://www.linkedin.com/in/mengxin-zhang-788766b4
+    target: _blank
   #google-plus:
   #  url: https://plus.google.com/u/0/109786624352426899645
   # target: _blank
